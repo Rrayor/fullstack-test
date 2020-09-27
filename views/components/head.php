@@ -31,6 +31,7 @@
                             <a href="#">Contact</a>
                             <a href="#">Sitemap</a>
                         </div>
+                        <hr>
                         <div id="auth_links">
                             <?php
                                 if(isset($_SESSION['id']) && !empty($_SESSION['id'])) {

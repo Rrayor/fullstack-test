@@ -9,7 +9,7 @@
     $conn = $db->getConn();
 
     if($conn === null) {
-        echo 'Error';
+        echo 'Server Error';
     }
 
     function redirect($url, $statusCode = 303)
@@ -32,36 +32,19 @@
     
     switch ($request_uri[0]) {
         case '/':
-            view('home');
+            require_once('./routes/home.php');
             break;
         case '/login':
-            if(!isset($_SESSION['id']) || empty($_SESSION['id'])) {
-                require_once('./controllers/login.php');
-                view('login');
-                break;
-            }
-
-            redirect('/list');
+            require_once('./routes/login.php');
             break;
         case '/list':
-            if(isset($_SESSION['id']) && !empty($_SESSION['id'])) {
-                require_once('./controllers/list.php');
-                if($_SERVER['REQUEST_METHOD'] === 'GET') {
-                    view('list');
-                }
-                break;
-            }
-
-            redirect('/login');
+            require_once('./routes/list.php');
             break;
         case '/logout':
-            session_unset();
-            session_destroy();
-            redirect('/');
+            require_once('./routes/logout.php');
             break;
         default:
-            header('HTTP/1.0 404 Not Found');
-            require '../views/404.php';
+            require_once('./routes/404.php');
             break;
     }
 

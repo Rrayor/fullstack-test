@@ -1,5 +1,6 @@
 <?php
     require_once('db_config.php');
+    require_once('db_util.php');
 
     function sanitizeString($str) {
         $str = trim($str);
@@ -7,9 +8,9 @@
     }
 
     function validateListItemData($id, $text, $list_id, $position) {
-        //$id = sanitizeString($id);
+        $id = sanitizeString($id);
         $text = sanitizeString($text);
-        //$list_id = sanitizeString($list_id);
+        $list_id = sanitizeString($list_id);
         $position = sanitizeString($position);
 
         $maxTextLength = 255;
@@ -85,6 +86,18 @@
         return $errors;
     }
 
+    function buildErrorArray($response) {
+        $errors = array();
+
+        if(isset($response['err_id']) && !empty($response['err_id'])) array_push($errors, $response['err_id']);
+        if(isset($response['err_text']) && !empty($response['err_text'])) array_push($errors, $response['err_text']);
+        if(isset($response['err_list_id']) && !empty($response['err_list_id'])) array_push($errors, $response['err_list_id']);
+        if(isset($response['err_position']) && !empty($response['err_position'])) array_push($errors, $response['err_position']);
+        if(isset($response['err_server']) && !empty($response['err_server'])) array_push($errors, $response['err_server']);
+
+        return $errors;
+    }
+
     function getLists($conn) {
         $stmt = $conn->prepare("SELECT list.id AS l_id, list_item.id, list_item.text, list_item.list_id, list_item.position FROM list LEFT JOIN list_item ON list.id=list_item.list_id ORDER BY list_item.position ASC");
         $stmt->execute();
@@ -110,34 +123,17 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if(!isset($conn) ||  !is_object($conn)) {
-            if(!isset($db)) {
-                $db = new DB();
-            }
-
-            $conn = $db->getConn();
-        }
+        $conn = setupConn(isset($conn) ? $conn : null);
 
         $items = json_decode($_POST['items']);
 
         $response = updateItems($conn, $items);
         
-        $errors = array();
-        if(isset($response['err_id']) && !empty($response['err_id'])) array_push($errors, $response['err_id']);
-        if(isset($response['err_text']) && !empty($response['err_text'])) array_push($errors, $response['err_text']);
-        if(isset($response['err_list_id']) && !empty($response['err_list_id'])) array_push($errors, $response['err_list_id']);
-        if(isset($response['err_position']) && !empty($response['err_position'])) array_push($errors, $response['err_position']);
-        if(isset($response['err_server']) && !empty($response['err_server'])) array_push($errors, $response['err_server']);
+        $errors = buildErrorArray($response);
 
         echo json_encode(array('errors' => $errors));
     } else if($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if(!isset($conn) ||  !is_object($conn)) {
-            if(!isset($db)) {
-                $db = new DB();
-            }
-
-            $conn = $db->getConn();
-        }
+        $conn = setupConn(isset($conn) ? $conn : null);
 
         getLists($conn);
     }

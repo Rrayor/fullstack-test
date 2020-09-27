@@ -39,17 +39,11 @@ var readResults = function readResults() {
 };
 
 var save = function save() {
-  var errorContainer, config, items, body;
+  var items, body;
   return regeneratorRuntime.async(function save$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          errorContainer = document.getElementsByClassName('error-message')[0];
-          config = {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          };
           items = readResults();
           body = JSON.stringify(items);
           $.ajax({
@@ -74,7 +68,7 @@ var save = function save() {
             }
           });
 
-        case 5:
+        case 3:
         case "end":
           return _context.stop();
       }

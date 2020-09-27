@@ -14,8 +14,6 @@ body {
 
 #main_container {
     margin: 0px;
-    padding-top: 1em;
-    padding-bottom: 1em;
     display: flex;
     width: 100%;
     min-height: 100vh;
@@ -40,7 +38,7 @@ a {
 
 header {
     margin: 0px;
-    padding: 1em;
+    padding: 0.5px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -50,6 +48,9 @@ header {
     #identity {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        justify-content: stretch;
+        max-width: 10%;
 
         img {
             padding: 1em;
@@ -60,18 +61,24 @@ header {
 
         h1 {
             padding: 1em;
+            color: #6f48a7;
         }
     }
 
     #header_nav {
+        width: 30%;
         display: flex;
         flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
 
         #links_container {
             display: block;
+            width: 100%;
+            text-align: right;
 
             #header_links {
-                border-bottom: 1px solid lightgray;
+                padding: 0.5em;
 
                 select {
                     border: none;
@@ -88,10 +95,22 @@ header {
                 }
             }
 
+            hr {
+                border: 0px;
+                height: 1px;
+                opacity: 0.7;
+                background-image: linear-gradient(left, #f0f0f0 20%, #898989 80%, #e0e0e0);
+            }
+
             #auth_links {
+                padding: 0.5em;
 
                 a {
                     margin: 0.4em;
+
+                    img {
+                        margin-right: 0.2em;
+                    }
                 }
             }
         }
@@ -116,11 +135,13 @@ header {
 
     ul {
         width: 75%;
+        height: 3em;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         list-style-type: none;
+        margin: 0px;
         padding-right: 2em;
         border-right: 1px solid lightgray;
 
@@ -130,13 +151,12 @@ header {
         }
     }
 
-    -webkit-box-shadow: 0px -1px 5px 0px rgba(205, 205, 205, 1);
-    -moz-box-shadow: 0px -1px 5px 0px rgba(205, 205, 205, 1);
-    box-shadow: 0px -1px 5px 0px rgba(205, 205, 205, 1);
-
-    -webkit-box-shadow: inset 0px -1px 5px 0px rgba(205, 205, 205, 1);
-    -moz-box-shadow: inset 0px -1px 5px 0px rgba(205, 205, 205, 1);
-    box-shadow: inset 0px -1px 5px 0px rgba(205, 205, 205, 1);
+    -webkit-box-shadow: 0px -2px 4px 1px rgba(232, 232, 232, 1),
+    inset 0px -2px 4px 1px rgba(232, 232, 232, 1);
+    -moz-box-shadow: 0px -2px 4px 1px rgba(232, 232, 232, 1),
+    inset 0px -2px 4px 1px rgba(232, 232, 232, 1);
+    box-shadow: 0px -2px 4px 1px rgba(232, 232, 232, 1),
+    inset 0px -2px 4px 1px rgba(232, 232, 232, 1);
 }
 
 #content {
@@ -144,7 +164,6 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 5%;
 }
 
 #login_card {
@@ -215,6 +234,7 @@ header {
 .lists {
     display: flex;
     flex-direction: row;
+    margin-top: 2%;
     padding: 1em;
     background-color: #eeeeee;
     border: 1px solid #f8f8f9;

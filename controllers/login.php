@@ -1,5 +1,6 @@
 <?php
     require_once('db_config.php');
+    require_once('db_util.php');
 
     function sanitizeString($str) {
         $str = trim($str);
@@ -67,13 +68,7 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if(!isset($conn) ||  !is_object($conn)) {
-            if(!isset($db)) {
-                $db = new DB();
-            }
-
-            $conn = $db->getConn();
-        }
+        $conn = setupConn(isset($conn) ? $conn : null);
 
         $_SESSION['response'] = login($conn, $_POST['username'], $_POST['password']);
         redirect('/list');

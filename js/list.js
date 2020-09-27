@@ -28,14 +28,6 @@ const readResults = () => {
 }
 
 const save = async () => {
-    const errorContainer = document.getElementsByClassName('error-message')[0]
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
     const items = readResults()
     const body = JSON.stringify(items)
 
